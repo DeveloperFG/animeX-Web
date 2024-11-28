@@ -45,8 +45,6 @@ export function Solicitados(){
 
     }, [])
 
-    console.log(lista)
-
     return(
         <div style={{display:'flex',  flexDirection:'column' , width:"100%", alignItems:"center", justifyContent:'center'}}>
             <h3>Solicitados</h3>
