@@ -201,7 +201,7 @@ export function Cadastrar(){
 
 
     return(
-        <div style={{display:'flex', width:"100%", height:'100vh', flexDirection:'column', padding:3, }}>
+        <div style={{display:'flex', width:"100%", height:'100vh', flexDirection:'column', padding:3, backgroundColor:'#000', color:'#fff' }}>
         <h1 style={{fontSize:'16px'}}>Cadastrar novo... </h1>
 
           <div>

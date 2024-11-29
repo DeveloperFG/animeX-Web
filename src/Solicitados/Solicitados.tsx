@@ -46,12 +46,12 @@ export function Solicitados(){
     }, [])
 
     return(
-        <div style={{display:'flex',  flexDirection:'column' , width:"100%", alignItems:"center", justifyContent:'center'}}>
+        <div style={{display:'flex', color:'#fff',  flexDirection:'column' , width:"100%", height:'100vh', alignItems:"center", justifyContent:'start', backgroundColor:"#000"}}>
             <h3>Solicitados</h3>
 
             <div style={{display:'flex', width:'90%', flexDirection:'column'}}>
                 {lista.map((item)=>(
-                    <div style={{backgroundColor:'gray', margin:'1%', color:"#fff", }}>
+                    <div style={{backgroundColor:'burlywood', margin:'1%', color:"#000", }}>
                         <span style={{marginRight:'1%'}}> <strong>Nome: </strong>{item.nome}</span>
                         <br></br>
                         <small>Descrição: {item.descricao}</small>
