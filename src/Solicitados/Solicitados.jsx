@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { AiFillCaretLeft } from "react-icons/ai";
 import { BiSolidXCircle } from "react-icons/bi";
 
+
 // interface ObjetoProps{
 //     id: number | string
 //     nome: string
