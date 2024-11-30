@@ -20,7 +20,8 @@ export function Solicitados(){
 
     const dispatch = useDispatch()
 
-    const [lista, setLista] = useState([[]])
+    const [lista, setLista] = useState([])
+    const [control, setControl] = useState(false)
 
     useEffect(()=>{
 
@@ -51,7 +52,7 @@ export function Solicitados(){
 
         getDadosList()
 
-    }, [])
+    }, [control])
 
 
     function irMenu(){
@@ -65,6 +66,7 @@ export function Solicitados(){
         deleteDoc(itemDoc)
         .then(() => {
             alert("Documento excluído com sucesso!");
+            setControl(!control)
           })
           .catch((error) => {
             alertr("Erro ao excluir documento:", error);
