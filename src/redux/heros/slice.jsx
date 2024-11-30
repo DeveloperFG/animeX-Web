@@ -20,9 +20,13 @@ export const heroSlice = createSlice({
             state.toogle = 'Solicitados'
         },
 
+        loadSobre: (state ) => {
+            state.toogle = 'Sobre'
+        },
+
     }
 })
 
-export const { loadMenu, loadSolicitados, loadCadastrar } = heroSlice.actions;
+export const { loadMenu, loadSolicitados, loadCadastrar, loadSobre } = heroSlice.actions;
 
 export default heroSlice.reducer;

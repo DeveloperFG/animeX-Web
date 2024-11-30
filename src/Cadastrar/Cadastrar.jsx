@@ -4,10 +4,16 @@ import db from '../db/firebaseConnection';
 
 import {collection, addDoc } from 'firebase/firestore'
 
+import { loadMenu } from '../redux/heros/slice'
+import { useDispatch } from "react-redux";
+
+import { AiFillCaretLeft } from "react-icons/ai";
+
+
 // import { IoMdCloseCircle } from "react-icons/io";
 export function Cadastrar(){
 
-
+  const dispatch = useDispatch()
 
   const [assistir, setAssistir] = useState('')
 
@@ -200,9 +206,21 @@ export function Cadastrar(){
 //   }
 
 
+    function irMenu(){
+        dispatch(loadMenu())
+    }
+
+
     return(
         <div style={{display:'flex', width:"100%", height:'100vh', flexDirection:'column', padding:3, backgroundColor:'#000', color:'#fff' }}>
-        <h1 style={{fontSize:'16px'}}>Cadastrar novo... </h1>
+            <div style={{width:'100%'}}>
+                <AiFillCaretLeft size={26} color="#fff" onClick={irMenu}/>
+            </div>
+
+            <div style={{ display:'flex', width:"100%", alignItems:'center', justifyContent:'center', marginBottom:"2%"}}>
+                 <h1 style={{fontSize:'16px'}}>Cadastrar novo... </h1>
+            </div>
+       
 
           <div>
               <span style={{marginRight:'2%'}}>Novo cadastro para:</span>
