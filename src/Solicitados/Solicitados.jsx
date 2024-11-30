@@ -3,16 +3,16 @@ import React, {useEffect, useState} from "react";
 import db from "../db/firebaseConnection";
 import { getDocs,  collection,} from 'firebase/firestore'
 
-interface ObjetoProps{
-    id: number | string
-    nome: string
-    descricao: string
+// interface ObjetoProps{
+//     id: number | string
+//     nome: string
+//     descricao: string
 
-  }
+//   }
 
 export function Solicitados(){
 
-    const [lista, setLista] = useState <ObjetoProps[]>([])
+    const [lista, setLista] = useState([[]])
 
     useEffect(()=>{
 
@@ -22,7 +22,7 @@ export function Solicitados(){
     
             getDocs(usersRef)
             .then((snapshot)=>{
-                 let lista = [] as ObjetoProps[];
+                 let lista = [];
 
                 snapshot.forEach((doc)=>{
                     lista.push({
