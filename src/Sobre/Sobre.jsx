@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 import db from "../db/firebaseConnection";
-import { getDocs,  collection,} from 'firebase/firestore'
+import { addDoc, getDocs,  collection, updateDoc, doc,} from 'firebase/firestore'
 
 import { loadMenu } from '../redux/heros/slice'
 import { useDispatch } from "react-redux";
@@ -43,6 +43,7 @@ export function Sobre(){
     const [personagens, setPersonagens] = useState([])
     const [animes, setAnimes] = useState([])
 
+    const [id, setId] = useState('')
     const [nome, setNome] = useState('')
     const [poder1, setPoder1] = useState('')
     const [poder2, setPoder2] = useState('')
@@ -51,13 +52,18 @@ export function Sobre(){
     const [avatar, setAvatar] = useState('')
     const [votos, setVotos] = useState('')
 
+    const [load, setLoad] = useState(false)
+    const [control, setControl] = useState(false)
+    const [cont, setCont]= useState(1)
+
     const [open, setOpen] = React.useState(false);
-    // const handleOpen = () => {};
+
     const handleClose = () => setOpen(false);
 
     const handleOpen = (item) => {
         setOpen(true)
 
+        setId(item.id)
         setNome(item.nome)
         setPoder1(item.poder1)
         setPoder2(item.poder2)
@@ -138,7 +144,7 @@ export function Sobre(){
 
         getDadosListPersonagens()
 
-    }, [])
+    }, [control])
 
     useEffect(()=>{
 
@@ -176,10 +182,34 @@ export function Sobre(){
       }
     
 
-      function EditarPersonagem(){
-        alert('clicou')
+     async function EditarPersonagem(){
+
+        setLoad(true)
+
+        const documentRef = doc(db, "personagens", `${id}`);
+
+        try {
+            await updateDoc(documentRef, {
+                nome: nome,
+                poder1: poder1,
+                poder2: poder2,
+                poder3: poder3,
+                avatar: avatar,
+                sobre: sobre,
+                votos: parseFloat(votos),
+    
+            });
+            alert("Atualizado com sucesso!")
+            setLoad(false)
+            setControl(!control)
+          } catch (error) {
+            console.error("Erro ao atualizar o campo:", error);
+            setLoad(false)
+          }  
+         
+
       }
-      
+
 
     return(
         <div style={{display:'flex', color:'#fff',  flexDirection:'column' , width:"100%", height:'100vh', alignItems:"center", justifyContent:'start', backgroundColor:"#000"}}>
@@ -208,30 +238,108 @@ export function Sobre(){
             >
             <Box sx={style}>
                 <Box width='90%' display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                     Atualizar informações
-                </Typography>
-    
-                        <input value={nome} style={{width:"95%", marginBottom:"2%"}} id="outlined-basic" label="Nome" variant="outlined" />
-                        <input value={poder2} style={{width:"95%", marginBottom:"2%" }} id="outlined-basic" label="Poder2" variant="outlined" />
-                        <input value={poder2} style={{width:"95%", marginBottom:"2%" }} id="outlined-basic" label="Poder2" variant="outlined" />
-                        <input value={poder3} style={{width:"95%", marginBottom:"2%"}} id="outlined-basic" label="Poder3" variant="outlined" />
-                        <input value={votos} style={{width:"95%", marginBottom:"2%"}} id="outlined-basic" label="Votos" variant="outlined" />
-                        <input value={avatar} style={{width:"95%", marginBottom:"2%"}} id="outlined-basic" label="Avatar" variant="outlined" />
-                        <textarea value={sobre} style={{width:"95%", marginBottom:"2%"}} id="outlined-basic" label="Sobre" variant="outlined" />
+                    <Box display='flex' alignItems='center' justifyContent='center'>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Personagem: 
+                        </Typography>
+                        <img style={{width:'50px', height:'50px', objectFit:'contain'}} src={avatar} />
+                    </Box>
+              
+                        <Box width='100%' display='flex' >
+                            <Box display='flex' width='30%' alignItems='center'>
+                                <small style={{marginLeft:'50%'}} >Nome:</small>
+                            </Box>
+                           
+                            <Box width='70%' alignItems='center' justifyContent='center'>
+                                <input value={nome} onChange={(e)=> setNome(e.target.value)} style={{width:"80%", marginBottom:"2%", }} id="outlined-basic" label="Nome" variant="outlined" />
+                            </Box>
+                           
+                        </Box>
 
+                        <Box width='100%' display='flex' >
+                            <Box display='flex' width='30%' alignItems='center'>
+                                <small style={{marginLeft:'50%'}} >Poder1:</small>
+                            </Box>
+                           
+                            <Box width='70%' alignItems='center' justifyContent='center'>
+                                <input value={poder1} onChange={(e)=> setPoder1(e.target.value)} style={{width:"80%", marginBottom:"2%", }} id="outlined-basic" label="Poder1" variant="outlined" />
+                            </Box>
+                           
+                        </Box>
+
+                        <Box width='100%' display='flex' >
+                            <Box display='flex' width='30%' alignItems='center'>
+                                <small style={{marginLeft:'50%'}} >Poder2:</small>
+                            </Box>
+                           
+                            <Box width='70%' alignItems='center' justifyContent='center'>
+                                <input value={poder2} onChange={(e)=> setPoder2(e.target.value)} style={{width:"80%", marginBottom:"2%", }} id="outlined-basic" label="Poder2" variant="outlined" />
+                            </Box>
+                           
+                        </Box>
+                        
+                        <Box width='100%' display='flex' >
+                            <Box display='flex' width='30%' alignItems='center'>
+                                <small style={{marginLeft:'50%'}} >Poder3:</small>
+                            </Box>
+                           
+                            <Box width='70%' alignItems='center' justifyContent='center'>
+                                <input value={poder3} onChange={(e)=> setPoder3(e.target.value)} style={{width:"80%", marginBottom:"2%", }} id="outlined-basic" label="Poder3" variant="outlined" />
+                            </Box>
+                           
+                        </Box>
+
+                        <Box width='100%' display='flex' >
+                            <Box display='flex' width='30%' alignItems='center'>
+                                <small style={{marginLeft:'50%'}} >Votos:</small>
+                            </Box>
+                           
+                            <Box width='70%' alignItems='center' justifyContent='center'>
+                                <input value={votos} onChange={(e)=> setVotos(e.target.value)} style={{width:"80%", marginBottom:"2%", }} id="outlined-basic" label="Votos" variant="outlined" />
+                            </Box>
+                           
+                        </Box>
+                     
+                        <Box width='100%' display='flex' >
+                            <Box display='flex' width='30%' alignItems='center'>
+                                <small style={{marginLeft:'50%'}} >Avatar:</small>
+                            </Box>
+                           
+                            <Box width='70%' alignItems='center' justifyContent='center'>
+                                <input value={avatar} onChange={(e)=> setAvatar(e.target.value)} style={{width:"80%", marginBottom:"2%", }} id="outlined-basic" label="Avatar" variant="outlined" />
+                            </Box>
+                           
+                        </Box>       
+                       
+                        <Box width='100%' display='flex' >
+                            <Box display='flex' width='30%' alignItems='center'>
+                                <small style={{marginLeft:'50%'}} >Sobre:</small>
+                            </Box>
+                           
+                            <Box width='70%' alignItems='center' justifyContent='center'>
+                                <textarea value={sobre} onChange={(e)=> setSobre(e.target.value)} style={{width:"80%", marginBottom:"2%", }} id="outlined-basic" label="Sobre" variant="outlined" />
+                            </Box>
+                           
+                        </Box>
+                        
                 </Box>
-
-                <button style={{width:'90%', backgroundColor:'gray', color:'#fff'}}>Salvar Alterações</button>
+                
+                <Box display='flex' width='95%' alignItems='center' justifyContent='center'>
+                    <button style={{width:'70%', backgroundColor:'gray', color:'#fff'}} onClick={EditarPersonagem}>{load ? 'Salvando atualização...': 'Salvar alterações'}</button>
+                </Box>
+                
               
             </Box>
             </Modal>
 
-            {personagens.map((item, index)=>(
-                <Box key={index}>
-                    <small onClick={()=> handleOpen(item)}>{item.nome}</small>
-                </Box>
-            ))}
+            <div style={{ width:"60%", overflow:'auto'}}>
+                {personagens.map((item, index)=>(
+                    <Box key={index}>
+                        <small onClick={()=> handleOpen(item)}> {item.nome}</small>
+                    </Box>
+                ))}
+            </div>
+            
 
 
         </div>
