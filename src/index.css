@@ -1,4 +1,12 @@
-/* :root {
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+
+:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -28,7 +36,7 @@ a:hover {
   place-items: center;
   min-width: 90%;
   min-height: 100vh;
-} */
+}
 
 
 h1 {

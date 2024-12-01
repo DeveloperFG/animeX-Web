@@ -30,9 +30,9 @@ export function Menu(){
               src={logo}
             />
             <h1 style={{fontSize:'22px', color:'#fff'}}>MENU DE OPÇÕES</h1>
-            <button style={{backgroundColor:'burlywood', margin:"0.5%"}} onClick={irSobre}>INFORMAÇÕES SOBRE O APP</button>
-            <button style={{backgroundColor:'burlywood', margin:"0.5%"}} onClick={irCadastrar}>CADASTRAR NOVO PERSONAGEM </button>
-            <button style={{backgroundColor:'burlywood', margin:"0.5%"}} onClick={irSolicitados}>LISTA DE PERSONAGENS SOLICITADOS </button>
+            <button style={{backgroundColor:'burlywood', margin:"0.5%", padding:'2%'}} onClick={irSobre}>INFORMAÇÕES SOBRE O APP</button>
+            <button style={{backgroundColor:'burlywood', margin:"0.5%", padding:'2%'}} onClick={irCadastrar}>CADASTRAR PERSONAGEM </button>
+            <button style={{backgroundColor:'burlywood', margin:"0.5%", padding:'2%'}} onClick={irSolicitados}>PERSONAGENS SOLICITADOS </button>
            {/* {togle ? <Cadastrar/> : <Solicitados/> } */}
         </div>
     )
